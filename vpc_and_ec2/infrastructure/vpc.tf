@@ -94,3 +94,11 @@ resource "aws_subnet" "private-subnet-4" {
     Name = "Private-Subnet-4"
   }
 }
+
+resource "aws_route_table" "public-route-table" {
+  vpc_id = aws_vpc.production-vpc.id
+
+  tags = {
+    Name = "Public Route Table"
+  }
+}
