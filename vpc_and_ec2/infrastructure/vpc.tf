@@ -39,10 +39,58 @@ resource "aws_subnet" "public-subnet-3" {
   cidr_block        = var.public_subnet_3_cidr
   vpc_id            = aws_vpc.production-vpc.id
   availability_zone = "ap-northeast-2c"
+
+  tags = {
+    Name = "Public-Subnet-3"
+  }
 }
 
 resource "aws_subnet" "public-subnet-4" {
   cidr_block        = var.public_subnet_4_cidr
   vpc_id            = aws_vpc.production-vpc.id
   availability_zone = "ap-northeast-2d"
+
+  tags = {
+    Name = "Public-Subnet-4"
+  }
+}
+
+resource "aws_subnet" "private-subnet-1" {
+  cidr_block        = var.private_subnet_1_cidr
+  vpc_id            = aws_vpc.production-vpc.id
+  availability_zone = "ap-northeast-2a"
+
+  tags = {
+    Name = "Private-Subnet-1"
+  }
+}
+
+resource "aws_subnet" "private-subnet-2" {
+  cidr_block        = var.private_subnet_2_cidr
+  vpc_id            = aws_vpc.production-vpc.id
+  availability_zone = "ap-northeast-2b"
+
+  tags = {
+    Name = "Private-Subnet-2"
+  }
+}
+
+resource "aws_subnet" "private-subnet-3" {
+  cidr_block        = var.private_subnet_3_cidr
+  vpc_id            = aws_vpc.production-vpc.id
+  availability_zone = "ap-northeast-2c"
+
+  tags = {
+    Name = "Private-Subnet-3"
+  }
+}
+
+resource "aws_subnet" "private-subnet-4" {
+  cidr_block        = var.private_subnet_4_cidr
+  vpc_id            = aws_vpc.production-vpc.id
+  availability_zone = "ap-northeast-2d"
+
+  tags = {
+    Name = "Private-Subnet-4"
+  }
 }
