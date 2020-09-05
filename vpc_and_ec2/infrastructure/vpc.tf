@@ -110,3 +110,43 @@ resource "aws_route_table" "private-route-table" {
     Name = "Private Route Table"
   }
 }
+
+resource "aws_route_table_association" "public-subnet-association-1" {
+  route_table_id  = aws_route_table.public-route-table.id
+  subnet_id       = aws_subnet.public-subnet-1
+}
+
+resource "aws_route_table_association" "public-subnet-association-2" {
+  route_table_id  = aws_route_table.public-route-table.id
+  subnet_id       = aws_subnet.public-subnet-2
+}
+
+resource "aws_route_table_association" "public-subnet-association-3" {
+  route_table_id  = aws_route_table.public-route-table.id
+  subnet_id       = aws_subnet.public-subnet-3
+}
+
+resource "aws_route_table_association" "public-subnet-association-4" {
+  route_table_id  = aws_route_table.public-route-table.id
+  subnet_id       = aws_subnet.public-subnet-4
+}
+
+resource "aws_route_table_association" "private-subnet-association-1" {
+  route_table_id  = aws_route_table.private-route-table.id
+  subnet_id       = aws_subnet.private-subnet-1
+}
+
+resource "aws_route_table_association" "private-subnet-association-2" {
+  route_table_id  = aws_route_table.private-route-table.id
+  subnet_id       = aws_subnet.private-subnet-2
+}
+
+resource "aws_route_table_association" "private-subnet-association-3" {
+  route_table_id  = aws_route_table.private-route-table.id
+  subnet_id       = aws_subnet.private-subnet-3
+}
+
+resource "aws_route_table_association" "private-subnet-association-4" {
+  route_table_id  = aws_route_table.private-route-table.id
+  subnet_id       = aws_subnet.private-subnet-4
+}
