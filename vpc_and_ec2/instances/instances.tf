@@ -181,13 +181,39 @@ resource "aws_launch_configuration" "ec2_public_launch_configuration" {
 }
 
 resource "aws_elb" "webapp_load_balancer" {
-  name = "Production-WebApp-LoadBalancer"
-  internal = false
+  name            = "Production-WebApp-LoadBalancer"
+  internal        = false
   security_groups = [aws_security_group.elb_security_group.id]
-  subnets = [data.terraform_remote_state.network_configuration.public_subnet_1_cidr,
+  subnets         = [data.terraform_remote_state.network_configuration.public_subnet_1_cidr,
     data.terraform_remote_state.network_configuration.public_subnet_2_cidr,
     data.terraform_remote_state.network_configuration.public_subnet_3_cidr,
     data.terraform_remote_state.network_configuration.public_subnet_4_cidr
+  ]
+
+  listener {
+    instance_port     = 80
+    instance_protocol = "HTTP"
+    lb_port           = 80
+    lb_protocol       = "HTTP"
+  }
+
+  health_check {
+    healthy_threshold   = 5
+    interval            = 30
+    target              = "HTTP:80/index.html"
+    timeout             = 10
+    unhealthy_threshold = 5
+  }
+}
+
+resource "aws_elb" "backend_load_balancer" {
+  name            = "Production-Backend-LoadBalancer"
+  internal        = true
+  security_groups = [aws_security_group.elb_security_group.id]
+  subnets         = [data.terraform_remote_state.network_configuration.private_subnet_1_cidr,
+    data.terraform_remote_state.network_configuration.private_subnet_2_cidr,
+    data.terraform_remote_state.network_configuration.private_subnet_3_cidr,
+    data.terraform_remote_state.network_configuration.private_subnet_4_cidr
   ]
 
   listener {
