@@ -32,4 +32,10 @@
     
  $ terraform apply -var-file="production.tfvars"
  </code>
-<pre>
+</pre>
+
+
+
+- **architecture**
+<img width="1615" alt="스크린샷 2020-09-06 오후 11 06 41" src="https://user-images.githubusercontent.com/19872667/92327620-dc988d80-f095-11ea-94cd-9ea4a08d47ed.png">
+
