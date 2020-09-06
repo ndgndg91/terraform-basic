@@ -320,3 +320,10 @@ resource "aws_sns_topic" "webapp_production_autoscaling_alert_topic" {
   display_name = "WebApp-AutoScaling-Topic"
   name         = "WebApp-AutoScaling-Topic"
 }
+
+resource "aws_sns_topic_subscription" "webapp_production_autoscaling_sns_subscription" {
+  endpoint  = "+821072255198"
+  protocol  = "sms"
+  topic_arn = aws_sns_topic.webapp_production_autoscaling_alert_topic.arn
+}
+
