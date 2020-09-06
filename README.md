@@ -7,7 +7,7 @@
 5. Create S3 Bucket for managing terraform state
 
 
-- infrastructure command directory
+- infrastructure command directory - **layer 1**
 <pre>
  <code>
  $ cd vpc_and_ec2/infrastructure
@@ -21,7 +21,7 @@
 </pre>
 
 
-- instances command directory
+- instances command directory - **layer 2**
 <pre>
  <code>
  $ cd vpc_and_ec2/instaces
