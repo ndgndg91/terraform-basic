@@ -159,11 +159,13 @@ resource "aws_launch_configuration" "ec2_private_launch_configuration" {
   user_data = <<EOF
     #!/bin/bash
     sudo yum update -y
-    sudo yum install httpd24 -y
+    sudo yum install httpd -y
     sudo service httpd start
     sudo chkconfig httpd on
-    export INSTANCE_ID=$(curl http://169.254.169.254/lastest/meta-data/instance-id)
-    echo "<html><body><h1>Hello from Production Backend at instance <b>"$INSTANCE_ID"</b></h1></body></html>" > /var/www/html/index.html
+    LOCAL_HOST_NAME=`curl http://169.254.169.254/latest/meta-data/local-hostname`
+    echo $LOCAL_HOST_NAME
+    sudo chown -R $USER:$USER /var/www
+    sudo echo "<html><body><h1>Hello from Production Web App at instance : <b>"$LOCAL_HOST_NAME"</b></h1></body></html>" > /var/www/html/index.html
   EOF
 }
 
@@ -178,11 +180,13 @@ resource "aws_launch_configuration" "ec2_public_launch_configuration" {
   user_data = <<EOF
     #!/bin/bash
     sudo yum update -y
-    sudo yum install httpd24 -y
+    sudo yum install httpd -y
     sudo service httpd start
     sudo chkconfig httpd on
-    export INSTANCE_ID=$(curl http://169.254.169.254/lastest/meta-data/instance-id)
-    echo "<html><body><h1>Hello from Production Web App at instance <b>"$INSTANCE_ID"</b></h1></body></html>" > /var/www/html/index.html
+    LOCAL_HOST_NAME=`curl http://169.254.169.254/latest/meta-data/local-hostname`
+    echo $LOCAL_HOST_NAME
+    sudo chown -R $USER:$USER /var/www
+    sudo echo "<html><body><h1>Hello from Production Web App at instance : <b>"$LOCAL_HOST_NAME"</b></h1></body></html>" > /var/www/html/index.html
   EOF
 }
 
