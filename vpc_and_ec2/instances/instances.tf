@@ -31,7 +31,8 @@ resource "aws_security_group" "ec2_public_security_group" {
     from_port = 22
     protocol = "TCP"
     to_port = 22
-    cidr_blocks = [data.terraform_remote_state.network_configuration.outputs.vpc_cidr] //only allow VPN
+//    cidr_blocks = [data.terraform_remote_state.network_configuration.outputs.vpc_cidr] //only allow VPN
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   egress {
@@ -157,10 +158,10 @@ resource "aws_launch_configuration" "ec2_private_launch_configuration" {
 
   user_data = <<EOF
     #!/bin/bash
-    yum update -y
-    yum install httpd24 -y
-    service httpd start
-    chkconfig httpd on
+    sudo yum update -y
+    sudo yum install httpd24 -y
+    sudo service httpd start
+    sudo chkconfig httpd on
     export INSTANCE_ID=$(curl http://169.254.169.254/lastest/meta-data/instance-id)
     echo "<html><body><h1>Hello from Production Backend at instance <b>"$INSTANCE_ID"</b></h1></body></html>" > /var/www/html/index.html
   EOF
@@ -176,10 +177,10 @@ resource "aws_launch_configuration" "ec2_public_launch_configuration" {
 
   user_data = <<EOF
     #!/bin/bash
-    yum update -y
-    yum install httpd24 -y
-    service httpd start
-    chkconfig httpd on
+    sudo yum update -y
+    sudo yum install httpd24 -y
+    sudo service httpd start
+    sudo chkconfig httpd on
     export INSTANCE_ID=$(curl http://169.254.169.254/lastest/meta-data/instance-id)
     echo "<html><body><h1>Hello from Production Web App at instance <b>"$INSTANCE_ID"</b></h1></body></html>" > /var/www/html/index.html
   EOF
