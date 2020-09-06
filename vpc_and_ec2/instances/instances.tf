@@ -184,10 +184,10 @@ resource "aws_elb" "webapp_load_balancer" {
   name            = "Production-WebApp-LoadBalancer"
   internal        = false
   security_groups = [aws_security_group.elb_security_group.id]
-  subnets         = [data.terraform_remote_state.network_configuration.public_subnet_1_cidr,
-    data.terraform_remote_state.network_configuration.public_subnet_2_cidr,
-    data.terraform_remote_state.network_configuration.public_subnet_3_cidr,
-    data.terraform_remote_state.network_configuration.public_subnet_4_cidr
+  subnets         = [data.terraform_remote_state.network_configuration.public_subnet_1_id,
+    data.terraform_remote_state.network_configuration.public_subnet_2_id,
+    data.terraform_remote_state.network_configuration.public_subnet_3_id,
+    data.terraform_remote_state.network_configuration.public_subnet_4_id
   ]
 
   listener {
@@ -210,10 +210,10 @@ resource "aws_elb" "backend_load_balancer" {
   name            = "Production-Backend-LoadBalancer"
   internal        = true
   security_groups = [aws_security_group.elb_security_group.id]
-  subnets         = [data.terraform_remote_state.network_configuration.private_subnet_1_cidr,
-    data.terraform_remote_state.network_configuration.private_subnet_2_cidr,
-    data.terraform_remote_state.network_configuration.private_subnet_3_cidr,
-    data.terraform_remote_state.network_configuration.private_subnet_4_cidr
+  subnets         = [data.terraform_remote_state.network_configuration.private_subnet_1_id,
+    data.terraform_remote_state.network_configuration.private_subnet_2_id,
+    data.terraform_remote_state.network_configuration.private_subnet_3_id,
+    data.terraform_remote_state.network_configuration.private_subnet_4_id
   ]
 
   listener {
