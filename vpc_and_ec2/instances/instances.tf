@@ -29,7 +29,7 @@ resource "aws_security_group" "ec2_public_security_group" {
 
   ingress {
     from_port = 22
-    protocol = "SSH"
+    protocol = "TCP"
     to_port = 22
     cidr_blocks = [data.terraform_remote_state.network_configuration.outputs.vpc_cidr] //only allow VPN
   }
@@ -51,7 +51,12 @@ resource "aws_security_group" "ec2_private_security_group" {
     from_port = 0
     protocol = "-1"
     to_port = 0
-    cidr_blocks = [aws_security_group.ec2_public_security_group.id]
+    cidr_blocks = [
+      data.terraform_remote_state.network_configuration.outputs.public_subnet_1_cidr,
+      data.terraform_remote_state.network_configuration.outputs.public_subnet_2_cidr,
+      data.terraform_remote_state.network_configuration.outputs.public_subnet_3_cidr,
+      data.terraform_remote_state.network_configuration.outputs.public_subnet_4_cidr
+    ]
   }
 
   ingress {
@@ -316,25 +321,4 @@ resource "aws_autoscaling_policy" "backend-production-scaling-policy" {
     }
     target_value = 80.0
   }
-}
-
-resource "aws_sns_topic" "webapp_production_autoscaling_alert_topic" {
-  display_name = "WebApp-AutoScaling-Topic"
-  name         = "WebApp-AutoScaling-Topic"
-}
-
-resource "aws_sns_topic_subscription" "webapp_production_autoscaling_sns_subscription" {
-  endpoint  = "+821072255198"
-  protocol  = "sms"
-  topic_arn = aws_sns_topic.webapp_production_autoscaling_alert_topic.arn
-}
-
-resource "aws_autoscaling_notification" "webapp_autoscaling_notification" {
-  group_names   = [aws_autoscaling_group.ec2_public_autoscaling_group.name]
-  notifications = [
-    "autoscaling:EC2_INSTANCE_LAUNCH",
-    "autoscaling:EC2_INSTANCE_TERMINATE",
-    "autoscaling:EC2_INSTANCE_LAUNCH_ERROR"
-  ]
-  topic_arn     = aws_sns_topic.webapp_production_autoscaling_alert_topic.arn
 }
