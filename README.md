@@ -7,7 +7,7 @@
 5. Create S3 Bucket for managing terraform state
 
 
-- command directory
+- infrastructure command directory
 <pre>
  <code>
  $ cd vpc_and_ec2/infrastructure
@@ -19,3 +19,17 @@
  $ terraform apply -var-file="production.tfvars"
  </code>
 </pre>
+
+
+- instances command directory
+<pre>
+ <code>
+ $ cd vpc_and_ec2/instaces
+ 
+ $ terraform init -backend-config="backend-prod.config"
+    
+ $ terraform plan -var-file="production.tfvars"
+    
+ $ terraform apply -var-file="production.tfvars"
+ </code>
+<pre>
